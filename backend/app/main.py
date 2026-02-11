@@ -51,7 +51,16 @@ def create_application() -> FastAPI:
             content={
                 "message": f"Welcome to {settings.APP_NAME}",
                 "version": settings.APP_VERSION,
-                "docs": "/docs"
+                "description": settings.APP_DESCRIPTION,
+                "docs": "/docs",
+                "redoc": "/redoc",
+                "health": f"{settings.API_V1_PREFIX}/health",
+                "endpoints": {
+                    "campaign_options": f"{settings.API_V1_PREFIX}/campaign/options",
+                    "execute_campaign": f"{settings.API_V1_PREFIX}/execute/campaign",
+                    "discover_companies": f"{settings.API_V1_PREFIX}/execute/companies/discover",
+                    "generate_email": f"{settings.API_V1_PREFIX}/execute/email/generate",
+                }
             }
         )
     

@@ -1,67 +1,63 @@
-# FastAPI Template
+# AI Email GTM Agent - Backend API
 
-A professional FastAPI boilerplate with best practices, proper folder structure, and optional Docker support.
+An AI-powered B2B outreach system that automates company discovery, research, contact finding, and personalized email generation using AI agents.
 
 ## 🚀 Features
 
-- **Clean Architecture**: Well-organized folder structure separating concerns
-- **API Versioning**: Built-in support for API versions (v1, v2, etc.)
-- **Database Integration**: SQLAlchemy ORM with example models
-- **Request Validation**: Pydantic schemas for request/response validation
-- **Security**: JWT authentication, password hashing with bcrypt
-- **Configuration Management**: Environment-based configuration with Pydantic Settings
-- **Middleware**: Request logging and CORS support
-- **Docker Support**: Optional containerization with Docker and Docker Compose
-- **Auto Documentation**: Swagger UI and ReDoc
-- **Health Check**: Built-in health check endpoint
+- **Automated Company Discovery**: Find target companies using Exa search based on industry, size, and criteria
+- **Deep Company Research**: AI-powered intelligence gathering for personalization
+- **Contact Finding**: Discover decision makers and their contact information
+- **Personalized Email Generation**: Create engaging, conversational cold emails
+- **Campaign Orchestration**: Complete workflow automation from discovery to email
+- **Real-time Streaming**: Progress updates during campaign execution
+- **REST API**: Clean, well-documented API endpoints
+- **Docker Support**: Containerized deployment ready
+
+## 🏗️ Architecture
+
+### Core Services
+
+1. **AgentService** - Manages AI agents (Agno + OpenAI)
+2. **CompanyDiscoveryService** - Finds target companies via Exa
+3. **CompanyResearchService** - Gathers company intelligence
+4. **ContactFinderService** - Discovers decision makers
+5. **EmailGenerationService** - Creates personalized emails
+6. **WorkflowOrchestrationService** - Coordinates full campaign
 
 ## 📁 Project Structure
 
 ```
 backend/
 ├── app/
-│   ├── __init__.py
 │   ├── main.py                 # FastAPI application factory
-│   ├── api/                    # API routes
-│   │   ├── __init__.py
-│   │   └── v1/                 # API version 1
-│   │       ├── __init__.py
-│   │       ├── router.py       # Combined router for all v1 endpoints
-│   │       └── endpoints/      # Individual endpoint files
-│   │           ├── __init__.py
-│   │           ├── health.py   # Health check endpoint
-│   │           └── users.py    # User management endpoints
-│   ├── core/                   # Core functionality
-│   │   ├── __init__.py
-│   │   ├── config.py           # Application settings
-│   │   ├── security.py         # Security utilities
-│   │   └── logging.py          # Logging configuration
-│   ├── db/                     # Database
-│   │   ├── __init__.py
-│   │   └── session.py          # Database session management
-│   ├── models/                 # SQLAlchemy models
-│   │   ├── __init__.py
-│   │   └── user.py             # User model
-│   ├── schemas/                # Pydantic schemas
-│   │   ├── __init__.py
-│   │   ├── health.py           # Health check schema
-│   │   └── user.py             # User schemas
-│   ├── services/               # Business logic
-│   │   ├── __init__.py
-│   │   └── user.py             # User service
+│   ├── api/v1/
+│   │   ├── router.py           # API router
+│   │   └── endpoints/
+│   │       ├── health.py       # Health check
+│   │       ├── campaign.py     # Campaign configuration
+│   │       └── execution.py    # Campaign execution
+│   ├── core/
+│   │   ├── config.py           # Settings & environment
+│   │   ├── constants.py        # Templates & constants
+│   │   ├── exceptions.py       # Custom exceptions
+│   │   └── logging.py          # Logging setup
+│   ├── schemas/
+│   │   ├── outreach.py         # Pydantic models
+│   │   └── health.py           # Health schemas
+│   ├── services/
+│   │   ├── agent_service.py    # AI agent management
+│   │   ├── company_service.py  # Company discovery
+│   │   ├── research_service.py # Company research
+│   │   ├── contact_service.py  # Contact finding
+│   │   ├── email_service.py    # Email generation
+│   │   └── workflow_service.py # Campaign orchestration
+│   ├── models/                 # Database models (optional)
 │   ├── middleware/             # Custom middleware
-│   │   ├── __init__.py
-│   │   └── logging.py          # Request logging
-│   └── utils/                  # Utility functions
-│       ├── __init__.py
-│       └── strings.py          # String utilities
-├── run.py                      # Uvicorn runner
+│   └── utils/                  # Utilities
 ├── requirements.txt            # Python dependencies
-├── .env.example                # Example environment variables
-├── .gitignore                  # Git ignore file
-├── Dockerfile                  # Docker image definition
-├── docker-compose.yml          # Docker Compose configuration
-└── .dockerignore               # Docker ignore file
+├── .env.example                # Environment template
+├── Dockerfile                  # Docker image
+└── docker-compose.yml          # Docker Compose config
 ```
 
 ## 🛠️ Setup
@@ -98,8 +94,325 @@ backend/
    # Copy example env file
    cp .env.example .env
 
-   # Edit .env with your configuration
+   # Edit .env and add your API keys
+   # Required:
+   EXA_API_KEY=your_exa_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
+
+5. **Run the application**
+
+   ```bash
+   # Using Python directly
+   python run.py
+
+   # Or using uvicorn
+   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+6. **Access the API**
+   - API: http://localhost:8000
+   - Swagger Docs: http://localhost:8000/docs
+   - ReDoc: http://localhost:8000/redoc
+
+## 🔑 API Keys Required
+
+### Exa API Key
+
+- **Purpose**: Company discovery and web research
+- **Get it from**: https://exa.ai
+- **Used for**: Finding target companies, gathering company intelligence
+
+### OpenAI API Key
+
+- **Purpose**: AI-powered email generation and analysis
+- **Get it from**: https://platform.openai.com
+- **Used for**: Running AI agents, generating personalized emails
+
+## 📚 API Endpoints
+
+### Campaign Configuration
+
+#### `GET /api/v1/campaign/options`
+
+Get all available campaign configuration options.
+
+**Response:**
+
+```json
+{
+  "company_categories": {
+    "SaaS/Technology Companies": {
+      "description": "Software, cloud services, and tech platforms",
+      "typical_roles": ["CTO", "Head of Engineering", ...]
+    },
+    ...
+  },
+  "service_types": ["Software Solution", "Consulting Services", ...],
+  "company_sizes": ["Startup (1-50)", "SMB (51-500)", ...],
+  "personalization_levels": ["Basic", "Medium", "Deep"],
+  "target_departments": ["GTM (Sales & Marketing)", "HR", ...]
+}
+```
+
+#### `POST /api/v1/campaign/configure`
+
+Validate campaign configuration before execution.
+
+**Request:**
+
+```json
+{
+  "outreach_config": {
+    "company_category": "SaaS/Technology Companies",
+    "target_departments": ["GTM (Sales & Marketing)"],
+    "service_type": "Software Solution",
+    "company_size_preference": "SMB (51-500)",
+    "personalization_level": "Deep"
+  },
+  "sender_details": {
+    "name": "John Doe",
+    "email": "john@company.com",
+    "organization": "Acme Corp",
+    "service_offered": "We help build data products",
+    "calendar_link": "https://calendly.com/john"
+  },
+  "num_companies": 5
+}
+```
+
+**Response:**
+
+```json
+{
+  "valid": true,
+  "errors": [],
+  "warnings": ["Calendar link not provided - emails will lack booking link"],
+  "config_summary": { ... }
+}
+```
+
+### Campaign Execution
+
+#### `POST /api/v1/execute/campaign`
+
+Execute a complete automated outreach campaign (synchronous).
+
+**Request:** Same as `/campaign/configure`
+
+**Response:**
+
+```json
+{
+  "campaign_id": null,
+  "results": [
+    {
+      "company_info": {
+        "company_name": "Example Corp",
+        "website_url": "https://example.com",
+        "industry": "SaaS",
+        "recent_news": [...],
+        "challenges": [...],
+        ...
+      },
+      "contacts": [
+        {
+          "name": "Jane Smith",
+          "title": "VP of Marketing",
+          "email": "jane@example.com",
+          "linkedin": "https://linkedin.com/in/jane",
+          ...
+        }
+      ],
+      "generated_emails": [
+        {
+          "subject": "Quick question about Example Corp's growth",
+          "body": "Hey Jane,\n\nI noticed Example Corp's...",
+          "personalization_notes": "Referenced recent company news..."
+        }
+      ],
+      "research_summary": "Company: Example Corp..."
+    }
+  ],
+  "total_companies": 5,
+  "total_contacts": 8,
+  "total_emails": 8,
+  "execution_time": 120.5
+}
+```
+
+#### `POST /api/v1/execute/campaign/stream`
+
+Execute campaign with real-time progress updates (Server-Sent Events).
+
+Returns NDJSON stream with progress updates:
+
+```json
+{"status": "discovering", "message": "Discovering target companies...", "progress": 0.1}
+{"status": "discovered", "message": "Found 5 companies", "progress": 0.2, "companies_found": 5}
+{"status": "processing", "message": "Researching Example Corp...", "progress": 0.3, ...}
+{"status": "completed", "message": "Campaign completed", "progress": 1.0, "results": [...]}
+```
+
+#### `POST /api/v1/execute/companies/discover`
+
+Discover companies only (without full campaign).
+
+**Request:**
+
+```json
+{
+  "company_category": "SaaS/Technology Companies",
+  "target_departments": ["GTM (Sales & Marketing)"],
+  "service_type": "Software Solution",
+  "company_size_preference": "All Sizes",
+  "personalization_level": "Deep"
+}
+```
+
+**Query Params:** `num_companies` (default: 5, max: 20)
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "companies_found": 5,
+  "companies": [
+    {
+      "company_name": "Example Corp",
+      "website_url": "https://example.com",
+      "industry": "SaaS",
+      "description": "Leading SaaS platform for...",
+      "company_size": "51-500",
+      "location": "San Francisco, CA"
+    }
+  ]
+}
+```
+
+#### `POST /api/v1/execute/email/generate`
+
+Generate a single personalized email.
+
+**Request:**
+
+```json
+{
+  "company_info": {
+    "company_name": "Example Corp",
+    "website_url": "https://example.com",
+    "industry": "SaaS",
+    ...
+  },
+  "contact_info": {
+    "name": "Jane Smith",
+    "title": "VP of Marketing",
+    "company": "Example Corp",
+    ...
+  },
+  "sender_details": { ... },
+  "outreach_config": { ... }
+}
+```
+
+**Response:**
+
+```json
+{
+  "email": {
+    "subject": "Quick question about Example Corp",
+    "body": "Hey Jane,\n\n...",
+    "personalization_notes": "Referenced recent news..."
+  },
+  "company_info": { ... },
+  "contact_info": { ... }
+}
+```
+
+### Health & Status
+
+#### `GET /api/v1/health`
+
+Basic health check.
+
+#### `GET /api/v1/execute/health`
+
+Check campaign execution service health (validates AI agents).
+
+**Response:**
+
+```json
+{
+  "status": "healthy",
+  "agents_configured": true,
+  "exa_api_configured": true,
+  "openai_api_configured": true,
+  "openai_model": "gpt-4"
+}
+```
+
+## 🧪 Example Usage
+
+### Using cURL
+
+```bash
+# Get campaign options
+curl http://localhost:8000/api/v1/campaign/options
+
+# Discover companies
+curl -X POST http://localhost:8000/api/v1/execute/companies/discover?num_companies=3 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_category": "SaaS/Technology Companies",
+    "target_departments": ["GTM (Sales & Marketing)"],
+    "service_type": "Software Solution",
+    "company_size_preference": "All Sizes",
+    "personalization_level": "Deep"
+  }'
+
+# Execute full campaign
+curl -X POST http://localhost:8000/api/v1/execute/campaign \
+  -H "Content-Type: application/json" \
+  -d @campaign_config.json
+```
+
+### Using Python
+
+````python
+import requests
+
+# Get options
+response = requests.get("http://localhost:8000/api/v1/campaign/options")
+options = response.json()
+
+# Execute campaign
+campaign_config = {
+    "outreach_config": {
+        "company_category": "SaaS/Technology Companies",
+        "target_departments": ["GTM (Sales & Marketing)"],
+        "service_type": "Software Solution",
+        "company_size_preference": "SMB (51-500)",
+        "personalization_level": "Deep"
+    },
+    "sender_details": {
+        "name": "John Doe",
+        "email": "john@company.com",
+        "organization": "Acme Corp",
+        "service_offered": "We build data products",
+        "calendar_link": "https://calendly.com/john"
+    },
+    "num_companies": 5
+}
+
+response = requests.post(
+    "http://localhost:8000/api/v1/execute/campaign",
+    json=campaign_config
+)
+results = response.json()
+print(f"Generated {results['total_emails']} emails for {results['total_companies']} companies")
+```   # Edit .env with your configuration
+````
 
 5. **Run the application**
 
