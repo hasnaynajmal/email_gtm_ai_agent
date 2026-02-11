@@ -831,8 +831,8 @@ For issues, questions, or contributions:
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review [API Documentation](#api-documentation)
 3. Open an issue on GitHub
-4. Contact: hasnay@example.com
+4. Contact: hasnaynajmal@gmail.com
 
 ---
 
-**Made with AI-powered automation**
+**Built with assistance from Claude Sonnet 4.5**
