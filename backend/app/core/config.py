@@ -12,9 +12,9 @@ class Settings(BaseSettings):
     """
     
     # App Info
-    APP_NAME: str = "FastAPI Template"
+    APP_NAME: str = "AI Email GTM Agent"
     APP_VERSION: str = "0.1.0"
-    APP_DESCRIPTION: str = "A professional FastAPI template with best practices"
+    APP_DESCRIPTION: str = "AI-powered B2B outreach agent for personalized email campaigns"
     
     # Environment
     ENVIRONMENT: str = "development"
@@ -44,6 +44,13 @@ class Settings(BaseSettings):
     
     # Logging
     LOG_LEVEL: str = "INFO"
+    
+    # AI Agent API Keys
+    EXA_API_KEY: str = ""
+    OPENAI_API_KEY: str = ""
+    
+    # OpenAI Configuration
+    OPENAI_MODEL: str = "gpt-4"
     
     model_config = SettingsConfigDict(
         env_file=".env",
