@@ -2,7 +2,7 @@
 
 An AI-powered B2B outreach system that automates company discovery, research, contact finding, and personalized email generation using AI agents.
 
-## 🚀 Features
+## Features
 
 - **Automated Company Discovery**: Find target companies using Exa search based on industry, size, and criteria
 - **Deep Company Research**: AI-powered intelligence gathering for personalization
@@ -13,7 +13,7 @@ An AI-powered B2B outreach system that automates company discovery, research, co
 - **REST API**: Clean, well-documented API endpoints
 - **Docker Support**: Containerized deployment ready
 
-## 🏗️ Architecture
+## Architecture
 
 ### Core Services
 
@@ -24,7 +24,7 @@ An AI-powered B2B outreach system that automates company discovery, research, co
 5. **EmailGenerationService** - Creates personalized emails
 6. **WorkflowOrchestrationService** - Coordinates full campaign
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 backend/
@@ -60,7 +60,7 @@ backend/
 └── docker-compose.yml          # Docker Compose config
 ```
 
-## 🛠️ Setup
+## Setup
 
 ### Option 1: Local Development (Without Docker)
 
@@ -115,7 +115,7 @@ backend/
    - Swagger Docs: http://localhost:8000/docs
    - ReDoc: http://localhost:8000/redoc
 
-## 🔑 API Keys Required
+## API Keys Required
 
 ### Exa API Key
 
@@ -129,7 +129,7 @@ backend/
 - **Get it from**: https://platform.openai.com
 - **Used for**: Running AI agents, generating personalized emails
 
-## 📚 API Endpoints
+## API Endpoints
 
 ### Campaign Configuration
 
@@ -352,7 +352,7 @@ Check campaign execution service health (validates AI agents).
 }
 ```
 
-## 🧪 Example Usage
+## Example Usage
 
 ### Using cURL
 
@@ -450,7 +450,7 @@ print(f"Generated {results['total_emails']} emails for {results['total_companies
    docker-compose logs -f
    ```
 
-## 📝 Usage
+## Usage
 
 ### Health Check
 
@@ -508,7 +508,7 @@ curl -X PUT http://localhost:8000/api/v1/users/1 \
 curl -X DELETE http://localhost:8000/api/v1/users/1
 ```
 
-## 🔧 Configuration
+## Configuration
 
 Environment variables can be configured in `.env` file:
 
@@ -523,7 +523,7 @@ Environment variables can be configured in `.env` file:
 | `SECRET_KEY`   | Secret key for JWT                   | (change in production) |
 | `LOG_LEVEL`    | Logging level                        | INFO                   |
 
-## 🎯 API Versioning
+## API Versioning
 
 To add a new API version:
 
@@ -536,7 +536,7 @@ To add a new API version:
    app.include_router(api_v2_router, prefix="/api/v2")
    ```
 
-## 📦 Adding New Features
+## Adding New Features
 
 ### Add New Endpoint
 
@@ -555,14 +555,14 @@ To add a new API version:
 3. Create service in `app/services/new_model.py`
 4. Create endpoints using the service
 
-## 🔒 Security
+## Security
 
 - Passwords are hashed using bcrypt
 - JWT tokens for authentication (configured but not enforced)
 - CORS enabled (configure in `app/core/config.py`)
 - Change `SECRET_KEY` in production!
 
-## 🧪 Testing
+## Testing
 
 To add tests, create a `tests/` directory and use pytest:
 
@@ -571,13 +571,13 @@ pip install pytest pytest-asyncio httpx
 pytest
 ```
 
-## 📚 Documentation
+## Documentation
 
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 - OpenAPI JSON: http://localhost:8000/openapi.json
 
-## 🚢 Deployment
+## Deployment
 
 ### Production Settings
 
@@ -606,14 +606,14 @@ docker build -t fastapi-app:latest .
 docker run -p 8000:8000 --env-file .env fastapi-app:latest
 ```
 
-## 📄 License
+## License
 
 This is a template project for educational and commercial use.
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to fork and customize for your needs!
 
-## 📞 Support
+## Support
 
 For issues or questions, please create an issue in the repository.
