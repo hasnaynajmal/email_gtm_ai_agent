@@ -1,7 +1,7 @@
 """
 Pydantic schemas for AI Email GTM Outreach
 """
-from typing import Dict, List, Optional, Literal
+from typing import Dict, List, Optional, Literal, Any
 from pydantic import BaseModel, Field
 
 
@@ -188,7 +188,7 @@ class CampaignExecutionResponse(BaseModel):
 
 class CampaignOptionsResponse(BaseModel):
     """Available options for campaign configuration"""
-    company_categories: Dict[str, Dict[str, any]]
+    company_categories: Dict[str, Dict[str, Any]]
     service_types: List[str]
     company_sizes: List[str]
     personalization_levels: List[str]

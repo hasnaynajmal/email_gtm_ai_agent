@@ -15,6 +15,7 @@ python-multipart==0.0.6
 # AI & Agent Framework
 agno>=2.0.4
 openai>=1.0.0
+exa_py
 
 # Other
 python-dotenv==1.0.0
