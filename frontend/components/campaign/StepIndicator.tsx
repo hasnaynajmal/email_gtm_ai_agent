@@ -23,26 +23,40 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold transition-colors ${
                   step.number === currentStep
-                    ? 'bg-blue-600 text-white'
+                    ? "bg-blue-600 text-white"
                     : step.number < currentStep
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-200 text-gray-600"
                 }`}
               >
                 {step.number < currentStep ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 ) : (
                   step.number
                 )}
               </div>
-              
+
               {/* Step Label */}
               <div className="ml-3 hidden sm:block">
-                <p className={`text-sm font-medium ${
-                  step.number === currentStep ? 'text-blue-600' : 'text-gray-900'
-                }`}>
+                <p
+                  className={`text-sm font-medium ${
+                    step.number === currentStep
+                      ? "text-blue-600"
+                      : "text-gray-900"
+                  }`}
+                >
                   {step.title}
                 </p>
                 <p className="text-xs text-gray-500">{step.description}</p>
@@ -54,7 +68,7 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
               <div className="flex-1 mx-4">
                 <div
                   className={`h-1 rounded ${
-                    step.number < currentStep ? 'bg-green-600' : 'bg-gray-200'
+                    step.number < currentStep ? "bg-green-600" : "bg-gray-200"
                   }`}
                 />
               </div>
