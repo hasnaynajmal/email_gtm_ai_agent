@@ -25,7 +25,7 @@ export function Input({
         </label>
       )}
       <input
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder:text-gray-400 ${
           error ? "border-red-500" : "border-gray-300"
         } ${className}`}
         {...props}
@@ -60,7 +60,7 @@ export function Textarea({
         </label>
       )}
       <textarea
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical ${
+        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical text-gray-900 placeholder:text-gray-400 ${
           error ? "border-red-500" : "border-gray-300"
         } ${className}`}
         {...props}
