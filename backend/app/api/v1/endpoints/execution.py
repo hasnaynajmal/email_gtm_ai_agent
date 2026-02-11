@@ -17,6 +17,7 @@ from app.schemas.outreach import (
 from app.services.workflow_service import get_workflow_service
 from app.services.company_service import get_company_service
 from app.services.email_service import get_email_service
+from app.services.storage_service import get_storage_service
 
 router = APIRouter(prefix="/execute", tags=["Campaign Execution"])
 
@@ -59,6 +60,23 @@ async def execute_campaign(campaign_config: CampaignConfig):
         
         # Execute campaign
         result = workflow_service.execute_campaign(campaign_config)
+        
+        # Save campaign to storage
+        try:
+            storage_service = get_storage_service()
+            campaign_metadata = {
+                "sender_name": campaign_config.sender_details.name,
+                "organization": campaign_config.sender_details.organization,
+                "company_category": campaign_config.outreach_config.company_category,
+                "service_type": campaign_config.outreach_config.service_type,
+                "num_companies_requested": campaign_config.num_companies,
+            }
+            campaign_id = storage_service.save_campaign(result, campaign_metadata)
+            result.campaign_id = campaign_id
+            logger.info(f"Campaign saved with ID: {campaign_id}")
+        except Exception as e:
+            logger.warning(f"Failed to save campaign to storage: {e}")
+            # Don't fail the whole request if storage fails
         
         logger.info("Campaign execution completed via API")
         logger.info(f"Results: {result.total_companies} companies, {result.total_emails} emails")
